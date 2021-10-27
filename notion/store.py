@@ -301,9 +301,10 @@ class RecordStore(object):
     def call_query_collection(
         self,
         collection_id,
+            space_id,
         collection_view_id,
         search="",
-        type="table",
+        type="reducer",
         aggregate=[],
         aggregations=[],
         filter={},
@@ -323,21 +324,13 @@ class RecordStore(object):
             sort = [sort]
 
         data = {
-            "collectionId": collection_id,
-            "collectionViewId": collection_view_id,
+            "collection": {"id": collection_id, "spaceId": space_id},
+            "collectionView": {"id": collection_view_id, "spaceId": space_id},
             "loader": {
-                "limit": 10000,
-                "loadContentCover": True,
+                "reducers": {"collection_group_results": {"type": "results", "limit": 10000},},
                 "searchQuery": search,
-                "userLocale": "en",
+                "type": "reducer",
                 "userTimeZone": str(get_localzone()),
-                "type": type,
-            },
-            "query": {
-                "aggregate": aggregate,
-                "aggregations": aggregations,
-                "filter": filter,
-                "sort": sort,
             },
         }
 
