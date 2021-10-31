@@ -331,6 +331,8 @@ class RecordStore(object):
                 "searchQuery": search,
                 "type": "reducer",
                 "userTimeZone": str(get_localzone()),
+                "sort": sort,
+                "filter": filter
             },
         }
 
